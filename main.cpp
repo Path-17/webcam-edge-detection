@@ -1,13 +1,39 @@
 #include <iostream>
-#include <opencv4/opencv2/opencv.hpp>         
+#include <opencv4/opencv2/opencv.hpp>
+#include<opencv4/opencv2/imgproc/imgproc.hpp>
+#include<opencv4/opencv2/highgui/highgui.hpp>
 
-std::vector asciiChars = {'@', '#', '8', 'S', '%', '?', '*', '+', ';', ',', '.'};
-
-const double asciiConst = 260/asciiChars.size();
+// Computes the x component of the gradient vector
+// at a given point in a image.
+// returns gradient in the x direction
+int xGradient(cv::Mat image, int x, int y)
+{
+    return image.at<uchar>(y-1, x-1) +
+                2*image.at<uchar>(y, x-1) +
+                 image.at<uchar>(y+1, x-1) -
+                  image.at<uchar>(y-1, x+1) -
+                   2*image.at<uchar>(y, x+1) -
+                    image.at<uchar>(y+1, x+1);
+}
+ 
+// Computes the y component of the gradient vector
+// at a given point in a image
+// returns gradient in the y direction
+ 
+int yGradient(cv::Mat image, int x, int y)
+{
+    return image.at<uchar>(y-1, x-1) +
+                2*image.at<uchar>(y-1, x) +
+                 image.at<uchar>(y-1, x+1) -
+                  image.at<uchar>(y+1, x-1) -
+                   2*image.at<uchar>(y+1, x) -
+                    image.at<uchar>(y+1, x+1);
+}
 
 int main(int argc, char** argv){
 
-    cv::Mat frame;
+    cv::Mat frame ,dst;
+    
 
     cv::VideoCapture vid(0);
     vid.set(cv::CAP_PROP_FPS, 30);
@@ -20,37 +46,28 @@ int main(int argc, char** argv){
         int width = frame.cols;
         int height = frame.rows;
 
-        // for( int j = 20 ; j < height ; j+=2){
-        //     std::string ascii = "";
-        //     for( int i = 0 ; i < width ; i+=2){
-        //         auto pixel1 = (frame.at<cv::Vec3b>(j,i)[0]*(0.114))
-        //             + (frame.at<cv::Vec3b>(j,i)[1]*(0.587))
-        //             + (frame.at<cv::Vec3b>(j,i)[2]*(0.299));
-        //         auto pixel2 = (frame.at<cv::Vec3b>(j+1,i)[0]*(0.114))
-        //             + (frame.at<cv::Vec3b>(j+1,i)[1]*(0.587))
-        //             + (frame.at<cv::Vec3b>(j+1,i)[2]*(0.299));
-        //         auto pixel3 = (frame.at<cv::Vec3b>(j,i+1)[0]*(0.114))
-        //             + (frame.at<cv::Vec3b>(j,i+1)[1]*(0.587))
-        //             + (frame.at<cv::Vec3b>(j,i+1)[2]*(0.299));
-        //         auto pixel4 = (frame.at<cv::Vec3b>(j+1,i+1)[0]*(0.114))
-        //             + (frame.at<cv::Vec3b>(j+1,i+1)[1]*(0.587))
-        //             + (frame.at<cv::Vec3b>(j+1,i+1)[2]*(0.299));
-        //         ascii += asciiChars[asciiChars.size() - 1 - floor(((pixel1+pixel2+pixel3+pixel4)/4)/asciiConst)];
-        //     }
-        //     std::cout << ascii << std::endl;
-        // }
-        // width = 640
-        // height = 480
-        cv::cvtColor(frame, frame, 0);
-        
+        int gx, gy, sum;
 
-        
+        cv::cvtColor(frame, frame, cv::COLOR_BGR2GRAY);
 
+        dst = frame.clone();
 
-        
+        for(int y = 0; y < frame.rows; y++)
+            for(int x = 0; x < frame.cols; x++)
+                dst.at<uchar>(y,x) = 0.0;
+ 
+        for(int y = 1; y < frame.rows - 1; y++){
+            for(int x = 1; x < frame.cols - 1; x++){
+                gx = xGradient(frame, x, y);
+                gy = yGradient(frame, x, y);
+                sum = abs(gx) + abs(gy);
+                sum = sum > 255 ? 255:sum;
+                sum = sum < 0 ? 0 : sum;
+                dst.at<uchar>(y,x) = sum;
+            }
+        }
 
-
-       cv::imshow("Webcam", frame);
+       cv::imshow("Webcam", dst);
        cv::waitKey(33);
     }
 

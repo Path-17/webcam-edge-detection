@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/georgyg/Documents/PROJECTS/webcamToASCII_C++
+CMAKE_SOURCE_DIR = /home/georgyg/Documents/PROJECTS/edgeDetection
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/georgyg/Documents/PROJECTS/webcamToASCII_C++
+CMAKE_BINARY_DIR = /home/georgyg/Documents/PROJECTS/edgeDetection
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/georgyg/Documents/PROJECTS/webcamToASCII_C++/CMakeFiles /home/georgyg/Documents/PROJECTS/webcamToASCII_C++//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/georgyg/Documents/PROJECTS/edgeDetection/CMakeFiles /home/georgyg/Documents/PROJECTS/edgeDetection//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/georgyg/Documents/PROJECTS/webcamToASCII_C++/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/georgyg/Documents/PROJECTS/edgeDetection/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -117,24 +117,24 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named asciiWebcam
+# Target rules for targets named edgeDetection
 
 # Build rule for target.
-asciiWebcam: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 asciiWebcam
-.PHONY : asciiWebcam
+edgeDetection: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 edgeDetection
+.PHONY : edgeDetection
 
 # fast build rule for target.
-asciiWebcam/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/asciiWebcam.dir/build.make CMakeFiles/asciiWebcam.dir/build
-.PHONY : asciiWebcam/fast
+edgeDetection/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/edgeDetection.dir/build.make CMakeFiles/edgeDetection.dir/build
+.PHONY : edgeDetection/fast
 
 main.o: main.cpp.o
 .PHONY : main.o
 
 # target to build an object file
 main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/asciiWebcam.dir/build.make CMakeFiles/asciiWebcam.dir/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/edgeDetection.dir/build.make CMakeFiles/edgeDetection.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -142,7 +142,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/asciiWebcam.dir/build.make CMakeFiles/asciiWebcam.dir/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/edgeDetection.dir/build.make CMakeFiles/edgeDetection.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -150,7 +150,7 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/asciiWebcam.dir/build.make CMakeFiles/asciiWebcam.dir/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/edgeDetection.dir/build.make CMakeFiles/edgeDetection.dir/main.cpp.s
 .PHONY : main.cpp.s
 
 # Help Target
@@ -161,7 +161,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... asciiWebcam"
+	@echo "... edgeDetection"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
