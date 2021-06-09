@@ -1,7 +1,7 @@
 #include <iostream>
 #include <opencv4/opencv2/opencv.hpp>
-#include<opencv4/opencv2/imgproc/imgproc.hpp>
-#include<opencv4/opencv2/highgui/highgui.hpp>
+#include <opencv4/opencv2/imgproc/imgproc.hpp>
+#include <opencv4/opencv2/highgui/highgui.hpp>
 
 
 enum options{
@@ -59,19 +59,23 @@ int yGradient(cv::Mat image, int x, int y, int option)
 int main(int argc, char** argv){
 
     std::string name;
+    name = "hi";
     int option;
 
-    if(argc == 2){
-        if(argv[1] == "prewitt"){
-            name = "Prewitt";
-            option = prewitt;
-        }
-        else if(argv[1] == "sobel"){
-            name = "Sobel";
-            option = sobel;
-        }
-
+    if(argv[1] == "prewitt"){
+        name = "Prewitt";
+        option = prewitt;
     }
+    else if(argv[1] == "sobel"){
+        name = "Sobel";
+        option = sobel;
+    }
+    else{
+        name = "Sobel";
+        option = sobel;
+    }
+
+    name += " edge detection";
 
     cv::Mat frame ,dst;
     
@@ -79,11 +83,11 @@ int main(int argc, char** argv){
     cv::VideoCapture vid(0);
     vid.set(cv::CAP_PROP_FPS, 30);
 
-    if(!vid.isOpened()){
-        return -1;
-    }
-    while(vid.read(frame)){
-        // type is CV_8UC3
+    int count = 1;
+
+    while(1){
+        //type is CV_8UC3
+        vid.read(frame);
         int width = frame.cols;
         int height = frame.rows;
 
@@ -93,10 +97,13 @@ int main(int argc, char** argv){
 
         dst = frame.clone();
 
-        for(int y = 0; y < frame.rows; y++)
-            for(int x = 0; x < frame.cols; x++)
+        for(int y = 0; y < frame.rows; y++){
+            for(int x = 0; x < frame.cols; x++){
                 dst.at<uchar>(y,x) = 0.0;
- 
+            }
+        }
+                
+
         for(int y = 1; y < frame.rows - 1; y++){
             for(int x = 1; x < frame.cols - 1; x++){
                 gx = xGradient(frame, x, y, option);
@@ -107,9 +114,10 @@ int main(int argc, char** argv){
                 dst.at<uchar>(y,x) = sum;
             }
         }
-
-       cv::imshow(name +" edge detection", dst);
+        
+       cv::imshow(argv[1] , dst);
        cv::waitKey(33);
+
     }
 
     return 0;
